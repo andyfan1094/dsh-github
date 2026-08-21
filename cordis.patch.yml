@@ -1,0 +1,4 @@
+# dsh-github bundle registration for the web profile.
+- insert:
+    - id: github
+      name: 'dsh-github'

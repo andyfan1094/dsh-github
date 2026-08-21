@@ -1,0 +1,14 @@
+import { GITHUB_API, type AccountSummary, type GitAction, type GitHubSettings, type RepoSummary, type GitResult } from '../protocol.ts'
+export class GithubApiError extends Error { constructor(message: string) { super(message); this.name = 'GithubApiError' } }
+async function json<T>(response: Response): Promise<T> { let body: unknown; try { body = await response.json() } catch { throw new GithubApiError('HTTP ' + response.status + ': invalid JSON') }; if (!response.ok) { const message = typeof body === 'object' && body !== null && typeof (body as { error?: unknown }).error === 'string' ? (body as { error: string }).error : 'HTTP ' + response.status; throw new GithubApiError(message) }; return body as T }
+function query(params: Record<string, string | undefined>): string { const value = new URLSearchParams(); for (const [key, item] of Object.entries(params)) if (item) value.set(key, item); const text = value.toString(); return text ? '?' + text : '' }
+export class GithubApi {
+  async listAccounts(): Promise<AccountSummary[]> { return (await json<{ accounts: AccountSummary[] }>(await fetch(GITHUB_API.accounts))).accounts }
+  async saveAccount(payload: { alias: string; token?: string; apiUrl?: string }): Promise<AccountSummary> { return (await json<{ account: AccountSummary }>(await fetch(GITHUB_API.accounts, { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify(payload) }))).account }
+  async deleteAccount(alias: string): Promise<void> { await json(await fetch(GITHUB_API.accounts, { method: 'DELETE', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ alias }) })) }
+  async testAccount(alias?: string): Promise<{ ok: boolean; alias: string; username?: string; error?: string }> { return (await json<{ result: { ok: boolean; alias: string; username?: string; error?: string } }>(await fetch(GITHUB_API.accountTest, { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ alias }) }))).result }
+  async listRepos(account?: string, search?: string): Promise<RepoSummary[]> { return (await json<{ repos: RepoSummary[] }>(await fetch(GITHUB_API.repos + query({ account, query: search })))).repos }
+  async getConfig(): Promise<GitHubSettings> { return (await json<{ config: GitHubSettings }>(await fetch(GITHUB_API.config))).config }
+  async saveConfig(patch: Partial<GitHubSettings>): Promise<GitHubSettings> { return (await json<{ config: GitHubSettings }>(await fetch(GITHUB_API.config, { method: 'PATCH', headers: { 'content-type': 'application/json' }, body: JSON.stringify(patch) }))).config }
+  async git(action: GitAction): Promise<GitResult> { return (await json<{ result: GitResult }>(await fetch(GITHUB_API.git, { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify(action) }))).result }
+}

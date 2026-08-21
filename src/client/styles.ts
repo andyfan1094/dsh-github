@@ -2,10 +2,13 @@ export const styles = String.raw`
 [data-dsh-github-view] { display: none; height: 100%; min-height: 0; color: var(--dsw-alias-fg-l1, #e8e8e8); background: var(--dsw-alias-bg-l1, #151515); font: 13px/1.45 system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
 html[data-dsh-github-active] [data-dsh-github-view] { display: flex; flex-direction: column; }
 html[data-dsh-github-active] [data-pane="conversation"] > *:not([data-dsh-github-view]) { display: none !important; }
-.dshGithubEntry { display: flex; align-items: center; gap: 8px; width: calc(100% - 16px); margin: 4px 8px; padding: 8px 10px; border: 0; border-radius: 6px; color: inherit; background: transparent; cursor: pointer; text-align: left; }
-.dshGithubEntry:hover, .dshGithubEntry[data-active="true"] { background: rgba(255,255,255,.09); }
-.dshGithubEntryIcon { width: 18px; display: inline-flex; justify-content: center; color: #8ab4f8; }
-.dshGithubEntryLabel { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.NS3bAW_entry { width: 100%; height: 32px; color: var(--dsw-alias-label-secondary); white-space: nowrap; cursor: pointer; background: 0 0; border: none; border-radius: 8px; align-items: center; gap: 8px; padding: 0 12px; font-size: 13px; display: flex; }
+.NS3bAW_entry:hover { color: var(--dsw-alias-label-primary); background: var(--dsw-specific-sidebar-nav-item-hover); }
+.NS3bAW_entry[data-active] { color: var(--dsw-alias-label-primary); background: var(--dsw-specific-sidebar-nav-item-active); font-weight: 600; }
+.NS3bAW_entryIcon { flex: none; justify-content: center; align-items: center; display: inline-flex; }
+.NS3bAW_entryLabel { text-overflow: ellipsis; overflow: hidden; }
+[data-dsh-frame][data-sidebar-collapsed] .NS3bAW_entry { justify-content: center; width: 100%; padding: 0; }
+[data-dsh-frame][data-sidebar-collapsed] .NS3bAW_entryLabel { display: none; }
 .dshGithubPanel { display: flex; flex-direction: column; min-height: 0; height: 100%; }
 .dshGithubHeader { display: flex; align-items: center; gap: 14px; padding: 18px 24px 12px; border-bottom: 1px solid rgba(255,255,255,.1); }
 .dshGithubTitle { margin: 0; font-size: 18px; font-weight: 650; }

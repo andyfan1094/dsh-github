@@ -1,7 +1,7 @@
 {
   "name": "dsh-github",
   "description": "GitHub authentication and local Git workflow plugin for the dsh web GUI: accounts, repository browsing, clone, pull, push, status, commit, and a settings panel. Token is stored in ~/.dsh/dsh-github.json (0600, atomic write); push is disabled by default. Standalone Cordis plugin — mounted via cordis.patch.yml + a profile node_modules link, no dsh source changes.",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "type": "module",
   "main": "lib/index.js",
   "types": "lib/types/index.d.ts",
@@ -75,7 +75,13 @@
     "build": "tsc -p tsconfig.build.json && tsdown && node scripts/postbuild.mjs",
     "bundle": "tsdown",
     "typecheck": "tsc --noEmit",
-    "test": "node --test tests/*.test.mjs"
+    "test": "node --experimental-strip-types --experimental-transform-types --test tests/*.test.ts",
+    "check": "npm run typecheck && npm run build && npm test",
+    "pack:check": "npm pack --dry-run --json",
+    "prepack": "npm run check"
+  },
+  "engines": {
+    "node": ">=22.19.0"
   },
   "license": "Apache-2.0",
   "repository": {

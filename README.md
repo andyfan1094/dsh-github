@@ -27,6 +27,12 @@ Restart the existing DSH Web process after installation. Open the GitHub sidebar
 - github_clone, github_pull, github_status
 - github_commit, github_push
 
+## Compatibility
+
+- DSH Host `0.1.0-rc.8` or newer compatible release.
+- Node.js `22.19.0` or newer.
+- Git must be available through the configured executable.
+
 ## Security
 
 The account file is local configuration, not a system secret vault. Use a fine-grained GitHub token with only the repositories and permissions needed by DSH. Revoke any token pasted into chat or source control and create a new one through the panel.

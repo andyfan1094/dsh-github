@@ -19,7 +19,7 @@ export class GithubApi {
     return needle === undefined || needle === '' ? repos : repos.filter(repo => (repo.name + ' ' + repo.fullName + ' ' + (repo.description ?? '')).toLowerCase().includes(needle))
   }
   async request<T>(account: StoredAccount, path: string): Promise<T> {
-    const response = await fetch(account.apiUrl + path, { headers: { accept: 'application/vnd.github+json', authorization: 'Bearer ' + account.token, 'x-github-api-version': '2022-11-28', 'user-agent': 'dsh-github/0.1.0' } })
+    const response = await fetch(account.apiUrl + path, { headers: { accept: 'application/vnd.github+json', authorization: 'Bearer ' + account.token, 'x-github-api-version': '2022-11-28', 'user-agent': 'dsh-github/0.1.2' } })
     const text = await response.text(); let body: unknown; try { body = JSON.parse(text) } catch { body = text }
     if (!response.ok) { const message = typeof body === 'object' && body !== null && typeof (body as { message?: unknown }).message === 'string' ? (body as { message: string }).message : 'GitHub API HTTP ' + response.status; throw new Error(message + ' (' + response.status + ')') }
     return body as T

@@ -14,6 +14,14 @@ DSH Web UI 的 GitHub 与本地 Git 工作流插件。
 
 ## Install in a profile
 
+Download the newest `dsh-github-*.tgz` from [Releases](https://github.com/andyfan1094/dsh-github/releases) and add it to the profile:
+
+```powershell
+dsh plugin --profile web add D:\downloads\dsh-github-0.1.2.tgz
+```
+
+For local development, build and install from a checkout instead:
+
     pnpm install
     pnpm run build
     dsh plugin --profile web add link:D:\项目\dsh-github

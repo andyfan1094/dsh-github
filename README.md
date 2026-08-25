@@ -1,5 +1,7 @@
 # dsh-github
 
+[中文文档](README.zh.md) | English
+
 DSH Web UI 的 GitHub 与本地 Git 工作流插件。
 
 ## Features
